@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if student %}Edit Student{% else %}Register Student{% endif %}{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <h2>{% if student %}Edit Student{% else %}Register New Student{% endif %}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label>Username:</label>
+        <input type="text" name="username" value="{% if student %}{{ student.user.username }}{% endif %}" required>
+
+        <label>Email:</label>
+        <input type="email" name="email" value="{% if student %}{{ student.user.email }}{% endif %}" required>
+
+        {% if not student %}
+        <label>Password:</label>
+        <input type="password" name="password" required>
+
+        <label>Confirm Password:</label>
+        <input type="password" name="confirm_password" required>
+        {% endif %}
+
+        <label>Bio:</label>
+        <textarea name="bio">{% if student %}{{ student.bio }}{% endif %}</textarea>
+
+        <label>Location:</label>
+        <input type="text" name="location" value="{% if student %}{{ student.location }}{% endif %}">
+
+        <button type="submit">{% if student %}Update Student{% else %}Register Student{% endif %}</button>
+    </form>
+</section>
+{% endblock %}

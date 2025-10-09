@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+<section class="student-list">
+    <h2>All Students</h2>
+
+    {% if students %}
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Bio</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.user.username }}</td>
+                <td>{{ student.user.email }}</td>
+                <td>{{ student.bio|default:"-" }}</td>
+                <td>{{ student.location|default:"-" }}</td>
+                <td>
+                    <a href="{% url 'edit_student' student.id %}" class="btn btn-edit">Edit</a>
+                    <a href="{% url 'delete_student' student.id %}" class="btn btn-delete">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No students found. <a href="{% url 'register' %}">Add a student</a>.</p>
+    {% endif %}
+</section>
+{% endblock %}
